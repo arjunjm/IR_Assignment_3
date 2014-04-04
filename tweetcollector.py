@@ -32,7 +32,9 @@ class TwitterCrawler():
 
 def main():
     tweet_crawler = TwitterCrawler()
-    tweet_list = tweet_crawler.get_first50_tweets('#katyperry')
+    user_query = raw_input("Input your query : ")
+    user_query = user_query.lower()
+    tweet_list = tweet_crawler.get_first50_tweets(user_query)
     print tweet_list
 
 if __name__ == '__main__':

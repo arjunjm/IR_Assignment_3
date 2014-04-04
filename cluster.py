@@ -13,6 +13,7 @@ stop = stopwords.words('english')
 
 def collect_tweets(tweet_collector_object):
 
+    tweets_file = open('tweets.txt', 'wb')
     query_tweet_map = {}
 
     query_list = ['#katyperry', '#katycats', '#darkhorse', '#iHeartRadio', '#ladygaga', '#TaylorSwift', '#sxsw', 'Rolling Stone',
@@ -22,7 +23,11 @@ def collect_tweets(tweet_collector_object):
 
     for query in query_list:
         query_tweet_map[query] = tweet_collector_object.get_first50_tweets(query)
+        tweet_with_query = query +": "+str(query_tweet_map[query])
+        tweets_file.write(tweet_with_query)
+        tweets_file.write('\n')
 
+    tweets_file.close()
     return query_tweet_map
 
 
@@ -79,7 +84,6 @@ def add_vectors(vector_1, vector_2):
 
     return sum_vector
 
-
 def build_unit_vector(input_map):
     sumOfSquares = 0
     for token in input_map:
@@ -115,10 +119,9 @@ def run_K_means(query_map, k, use_cosine, purity_threshold = None):
 
     max_cluster_purity = 0
     max_purity_clusters = []
-    overall_cluster_purity = 0
     best_cluster_RSS = 0
 
-    for i in range(0, 100):
+    for i in range(0, 50):
 
         # Choosing the initial selection of seeds
         cluster_centres = []
